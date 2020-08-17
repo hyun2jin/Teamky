@@ -1,0 +1,152 @@
+<Context docBase="C:\tempfiles" path="/images" />
+
+// 1. 로그인유저만 글쓰기 가능
+//2. 비로그인유저는 글쓰기 버튼 누르면 메시지 출력
+//3. 글수정기능
+//4. 글삭제기능
+//5. 로그아웃
+
+7. 댓글
+8. 방명록작성(수정,삭제)
+9. 출석부작성
+10. 내정보작성
+7. 관리자메뉴(글삭제,로그인정지,유저로그)
+6. 글목록 마지막페이지부터 1페이지로 목록전환
+12. 웹카운터 넣기
+11. 글간격조정
+
+CREATE DATABASE board;
+USE board;
+
+
+create table board.member(
+	memberid varchar(50) primary key,
+    name varchar(50) not null,
+    password varchar(10) not null,
+    regdate datetime not null
+);
+
+
+select * from member;
+
+select * from board.article;
+select * from board.article_content;
+
+
+
+alter table board.article_content add column (
+	file_name varchar(255)
+);
+
+delete article 
+
+
+use board;
+select count(*) from article;
+
+
+
+
+create table board.article (
+	article_no int auto_increment primary key,
+    writer_id varchar(50) not null,
+    writer_name varchar(255) not null,
+    title varchar(255) not null,
+    regdate datetime not null,
+    moddate datetime not null,
+    read_cnt int    
+)ENGINE=InnoDB DEFAULT CHARSET=utf8; 
+
+create table board.article_content (
+	article_no int primary key,
+    content text
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+
+
+
+CREATE DATABASE PrWeb;
+USE PrWeb;
+
+/*멤버 테이블*/
+Create table member(
+	member_seq int auto_increment primary key not null,
+    member_id varchar(50) not null,
+    member_nick varchar(50) not null,
+    passwd varchar(50) not null,
+    regdate DATETIME DEFAULT NOW(),
+    member_st int not null default 1,
+    member_att int not null default 0        
+);
+
+select * from member;
+alter table member add email varchar(50); 
+alter table member add phone varchar(50);
+
+
+commit
+
+select * from member order by member_seq desc limit 1;
+
+memberselect * from member;
+
+insert into member (member_id, member_nick, passwd) values('admin', 'admin', '1234');
+
+
+
+/*출석부*/
+create table atten(
+	atten_id varchar(50) not null,
+    atten_nick varchar(50) not null,
+    atten_body varchar(200) not null
+);
+
+/* 자유게시판 */
+create table freeboard(
+  board_num int NOT NULL primary key,
+  board_id VARCHAR(50),
+  board_subject VARCHAR(100),
+  board_content VARCHAR(2000),
+  board_date varchar(50),
+  board_count int default 0
+);
+select * from freeboard;
+
+create table commentboard(
+	comm_seq int not null primary key,
+    comm_nick varchar(50) not null,
+    comm_body varchar(200) not null,
+    comm_root int not null,
+    comm_good int default 0,
+    comm_bad int default 0,
+    writedate DATETIME default now()
+);
+
+create table guestboard(
+	guestnick varchar(50) not null,
+    guestbody varchar(100) not null,
+    writedate DATETIME default now()
+);
+
+create table loghistory(
+	logid	varchar(50) not null,
+    logatt int not null,
+    logip varchar(50),
+     writedate DATETIME default now()    
+);
+
+use prweb;
+
+
+select * from freeboard where board_num < 20 and board_num > 10 ORDER BY board_num DESC LIMIT 10;
+
+select * from freeboard;
+
+delete from freeboard where board_num = 1;
+
+
+
+select * from freeboard where board_num <= 72 order by board_num desc LIMIT 10;
+

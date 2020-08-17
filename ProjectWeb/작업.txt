@@ -1,0 +1,134 @@
+
+
+CREATE DATABASE PrWeb;
+USE PrWeb;
+
+/*멤버 테이블*/
+Create table member(
+	member_seq int auto_increment primary key not null,
+    member_id varchar(50) not null,
+    member_nick varchar(50) not null,
+    passwd varchar(50) not null,
+    email varchar(50) not null,
+    phone varchar(50) not null,
+    regdate DATETIME DEFAULT NOW(),
+    member_st int not null default 1,
+    member_att int not null default 0        
+);
+
+commit;
+select * from member;
+alter table member add chulday int default 0;
+alter table member add phone varchar(50);
+INSERT INTO member (member_id, member_nick, passwd, email, phone) VALUES ('admin', '관리자', '1234', 'fdfd@dd.com', '0101125212');
+
+select chulday from member where member_nick = '서울';
+
+select * from member order by member_seq desc limit 1;
+
+
+
+select count(chul_nick) from chulcheck where chul_nick = '서울';
+insert into member (member_id, member_nick, passwd) values('admin', 'admin', '1234');
+
+
+
+/*출석부*/
+create table atten(
+	atten_id varchar(50) not null,
+    atten_nick varchar(50) not null,
+    atten_body varchar(200) not null
+);
+
+/* 자유게시판 */
+create table freeboard(
+  board_num int NOT NULL primary key,
+  board_id VARCHAR(50),
+  board_subject VARCHAR(100),
+  board_content VARCHAR(2000),
+  board_date varchar(50),
+  board_lock boolean default false,
+  board_count int default 0
+);
+select * from freeboard;
+delete from freeboard;
+
+create table commentboardex(
+	comment_num		int not null,
+    comment_board	int not null,
+    comment_commnum int not null,
+    comment_nick	varchar(50) not null,
+    comment_date	varchar(50) not null,
+    comment_parent	int not null,     
+    comment_content	varchar(1000) not null
+);
+select * from commentboardex;
+
+create table commentboard(
+	comment_num		int not null,
+    comment_board	int not null,
+    comment_nick	varchar(50) not null,
+    comment_date	varchar(50) not null,
+    comment_parent	int not null,     
+    comment_content	varchar(1000) not null
+);
+
+select * from commentboard;
+select * from commentboard where comment_parent = 1;
+
+SET SQL_SAFE_UPDATES = 0;
+select * from commentboard;
+delete from commentboard where comment_num = -1;
+update commentboard set comment_parent2 = 1 where comment_num = 2;
+
+
+create table guestbook(
+	guest_no	int not null primary key,
+    guest_nick	varchar(50) not null,
+    guest_passwd varchar(50) not null,
+    guest_content varchar(1000) not null,
+    guest_image varchar(50) not null,
+    guest_date	varchar(50)   
+);
+
+select * from guestbook;
+select * from guestbook ORDER BY guest_no DESC;
+
+create table loghistory(
+	log_num		int	not null,
+	log_nick	varchar(50)	not null,
+    log_cont	varchar(1000) not null,
+    log_date	varchar(100) not null,
+    log_ip		varchar(50)
+);
+
+
+
+create table chulcheck (
+	chul_idx	int not null primary key,
+    chul_nick	varchar(50) not null,
+    chul_content varchar(100) not null,
+    chul_date	varchar(50) not null,    
+	chul_ip		varchar(50) not null,
+    chul_day	int default 0
+);
+select * from chulcheck;
+delete from chulcheck;
+select * from chulcheck ORDER BY chul_idx DESC;
+
+
+use prweb;
+select count(member_nick) from member where member_nick='서울';
+
+
+select * from freeboard where board_num < 20 and board_num > 10 ORDER BY board_num DESC LIMIT 10;
+
+select * from freeboard;
+
+delete from freeboard where board_num = 1;
+select count(chul_nick) from chulcheck where chul_nick = '서울';
+
+
+select * from freeboard where board_num <= 72 order by board_num desc LIMIT 10;
+
+select comment_num from commentboard where comment_parent = 1 order by comment_num desc limit 1
